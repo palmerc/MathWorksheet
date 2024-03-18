@@ -1,0 +1,60 @@
+%----------------COMMANDS-------------------------------------------%%
+\newcommand\blank{\underline{\hspace{2cm}}} % Gives a blank
+\newcounter{prob} % A new counter for current problem number
+\setcounter{prob}{1} % Start the counter at the value 1
+\newcommand\itm{
+\fbox{\textbf{\theprob}} \refstepcounter{prob}
+} % Calls problem number
+\newcommand{\problem}[1]{\makebox[0.5cm]{\itm}
+  \begin{minipage}[t]{\textwidth-0.5cm} #1 \end{minipage}
+} % An environment for a problem statement on or more lines
+\newcommand{\pairofprobs}[2]{
+  \begin{minipage}[t]{0.5\textwidth}\itm #1 \end{minipage}
+  \begin{minipage}[t]{0.5\textwidth}\itm #2 \end{minipage}
+} % Fits two problems on a line
+\newcommand{\threeprobs}[3]{
+\begin{minipage}[t]{0.31\textwidth}\itm #1 \end{minipage} \hfill
+ \begin{minipage}[t]{0.31\textwidth}\itm #2 \end{minipage} \hfill
+ \begin{minipage}[t]{0.31\textwidth}\itm #3 \end{minipage}
+} % Fits three problems on a line
+\newcounter{choice} % Counter for multiple choice problems
+\setcounter{choice}{1} % Start the counter at the value 1
+\newcommand\achoice{
+(\alph{choice}) \stepcounter{choice}
+} % Generates letter for multiple choice option
+\newcommand{\answers}[5]{\vspace*{-7mm}
+  \begin{tabular}{l@{\hspace{1mm}}p{0.9\textwidth}}
+    \achoice & #1 \\ \achoice & #2 \\ \achoice & #3 \\
+    \achoice & #4 \\ \achoice & #5 \end{tabular}
+  \setcounter{choice}{1}
+} % Makes multiple-choice options
+%---------------------------------
+
+% The commands below are for setting up arithmetic
+% problems with the four basic operations. See examples
+% in the CONTENT section
+
+\newcommand\divi[2]{
+$#1 \: \begin{array}{|l}
+\hline #2
+\end{array}$
+}
+
+\newcommand\mult[2]{
+$\begin{array}{rr}
+ & #1 \\
+ \times & #2 \\ \hline
+ \end{array}$}
+
+\newcommand\addi[2]{
+  $\begin{array}{rr}
+   &  #1 \\
+    + & #2 \\ \hline
+  \end{array}$}
+
+\newcommand\subt[2]{
+  $\begin{array}{rr}
+    & #1 \\
+    - & #2 \\ \hline
+  \end{array}$}
+%-------------------------------------------------------------------%%
