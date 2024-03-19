@@ -1,4 +1,4 @@
-## Ten Frames generator
+## Multiplication Worksheet generator
 
 ### Install requirements
 
