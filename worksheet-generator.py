@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
+import argparse
 
 from pylatex import Document
 from pylatex.base_classes import Arguments, Command, Environment
 from pylatex.basic import HFill, LineBreak, NewLine
 from pylatex.package import Package
 from pylatex.position import VerticalSpace, HorizontalSpace, Center
-from math_commands import Multiplication
+from math_commands import Multiplication, Division, Addition
 import random
 
 
@@ -20,7 +21,9 @@ class Worksheet(Document):
     def __init__(self):
         super().__init__(indent=False, geometry_options={'lmargin': '2cm', 'rmargin': '2cm'})
         self.change_document_style('empty') # No page number please
+        self._add_header()
 
+    def _add_header(self):
         with self.create(Framed()) as e:
             with e.create(Center()) as f:
                 f.append(Command('LARGE'))
@@ -69,9 +72,90 @@ class MultiplicationWorksheet(Worksheet):
             index += 1
 
 
-if __name__ == '__main__':
-    ws = MultiplicationWorksheet()
-    ws.fill_document()
+class DivisionWorksheet(Worksheet):
+    _title = 'Division 1 to 9'
+    _instructions = 'Find the quotient.'
 
-    ws.generate_pdf('worksheet', clean_tex=False)
-    tex = ws.dumps()  # The document as string in LaTeX syntax
+    def __init__(self):
+        super().__init__()
+        self.append(Division.command())
+
+    @staticmethod
+    def _problems(r, count):
+        m = [(i, j, i*j) for i in r for j in r]
+        random.shuffle(m)
+        if len(m) > count:
+            m = m[:count]
+        return m
+
+    def fill_document(self):
+        index = 0
+        for i, _, k in self._problems(range(1, 10), count=80):
+            self.append(Division(arguments=Arguments(k, i)))
+
+            row = int(index / 10) + 1
+            column = index % 10 + 1
+            if column == 10:
+                self.append(VerticalSpace('1cm'))
+                self.append(LineBreak())
+            else:
+                self.append(HFill())
+
+            index += 1
+
+
+class AdditionWorksheet(Worksheet):
+    _title = 'Addition 0 to 10'
+    _instructions = 'Find the sum.'
+
+    def __init__(self):
+        super().__init__()
+        self.append(Addition.command())
+
+    @staticmethod
+    def _problems(r, count):
+        m = [(i, j, i+j) for i in r for j in r]
+        random.shuffle(m)
+        if len(m) > count:
+            m = m[:count]
+        return m
+
+    def fill_document(self):
+        index = 0
+        for i, j, _ in self._problems(range(0, 11), count=80):
+            self.append(Addition(arguments=Arguments(i, j)))
+
+            row = int(index / 10) + 1
+            column = index % 10 + 1
+            if column == 10:
+                self.append(VerticalSpace('1cm'))
+                self.append(LineBreak())
+            else:
+                self.append(HFill())
+
+            index += 1
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Generate worksheets for practicing math facts.')
+    parser.add_argument('--type', '-t', choices=['multiplication', 'division', 'addition'], default='multiplication',
+                        help='Choose a worksheet type')
+    parser.add_argument('--answers', '-a', action='store_true',
+                        help='Generate an answer key')
+    parser.add_argument('--count', '-c', type=int, default=1,
+                        help='Number of worksheets to generate')
+    args = parser.parse_args()
+
+    if args.type == 'multiplication':
+        ws = MultiplicationWorksheet()
+    elif args.type == 'division':
+        ws = DivisionWorksheet()
+    elif args.type == 'addition':
+        ws = AdditionWorksheet()
+    else:
+        raise ValueError('Invalid worksheet type')
+
+    for _ in range(args.count):
+        ws.fill_document()
+        ws.generate_pdf('worksheet', clean_tex=False)
+        tex = ws.dumps()

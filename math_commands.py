@@ -53,12 +53,29 @@ class Subtraction(CommandBase):
 class Division(CommandBase):
     _latex_name = 'divi'
 
+    packages = [Package('xcolor')]
+
     _latex = r'''
-    $#1 \: \begin{array}{|l}
-     \hline #2
-     \end{array}$    
-    '''
+       $\begin{array}{rr}
+        & #1 \\
+        \div & #2 \\ \hline
+        \end{array}$
+        '''
 
     @classmethod
     def command(cls):
         return UnsafeCommand('newcommand', f'\\{cls._latex_name}', options=2, extra_arguments=cls._latex)
+
+
+# class Division(CommandBase):
+#     _latex_name = 'divi'
+#
+#     _latex = r'''
+#     $#1 \: \begin{array}{|l}
+#      \hline #2
+#      \end{array}$
+#     '''
+#
+#     @classmethod
+#     def command(cls):
+#         return UnsafeCommand('newcommand', f'\\{cls._latex_name}', options=2, extra_arguments=cls._latex)
