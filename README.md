@@ -1,4 +1,4 @@
-## Multiplication Worksheet generator
+## Mathematics Worksheet generator
 
 ### Install requirements
 
@@ -10,8 +10,15 @@
 
 ### Generate a random PDF
 
-    ./worksheet-generator.py
+To generate 5 random multiplication worksheets
 
+    ./worksheet-generator.py --type multiplication --count 5
+
+Or one division worksheet
+
+    ./worksheet-generator.py --type division
+
+Types also include `addition` and `subtraction`
 
 
 ![Multiplication Worksheet](multiplication-sample.jpg)
