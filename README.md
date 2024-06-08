@@ -1,5 +1,9 @@
 ## Mathematics Worksheet generator
 
+I'm a firm believe in practice makes perfect and because the richest nation in the world cannot or will not afford books and printed worksheets I had to cobble something together for generating some basic worksheets. The most important worksheet and original motivation was the multiplication and division worksheets to create that automatic knowledge upon which more interesting concepts are built, but we've expanded into clock reading and long addition as it came up.
+
+The worksheets are random so as to avoid simple copying.
+
 ### Install requirements
 
 [Install MacTex](https://tug.org/mactex/)
@@ -18,8 +22,12 @@ Or one division worksheet
 
     ./worksheet-generator.py --type division
 
-Types also include `addition` and `subtraction`
+Types also include `addition`, `subtraction` and `clocks`
 
 
-![Multiplication Worksheet](multiplication-sample.jpg)
+![Multiplication Worksheet](samples/multiplication.jpg)
+![Clocks Worksheet](samples/clocks.jpg)
+![Division Worksheet](samples/division.jpg)
+![Addition Worksheet](samples/addition.jpg)
+
 
