@@ -1,39 +1,62 @@
-from pylatex.base_classes import Arguments
-from pylatex.basic import HFill, LineBreak
-from pylatex.position import VerticalSpace
-
-from .math_commands import Addition
-from .worksheet import Worksheet
-
 import random
+
+from pylatex import Tabularx, Command
+from pylatex.base_classes import Arguments
+from pylatex.basic import LineBreak, NewLine
+from pylatex.position import VerticalSpace
+from pylatex.utils import NoEscape
+
+from .math_commands import Addition, AdditionAnswer
+from .worksheet import Worksheet
 
 
 class AdditionWorksheet(Worksheet):
-    _title = 'Addition 0 to 10'
     _instructions = 'Find the sum.'
 
-    def __init__(self):
+    def __init__(self, range, rows=5, columns=6, answers=False):
+        self._title = f'Addition {range.start} to {range.stop}'
+        self._range = range
+        self._rows = rows
+        self._columns = columns
+        self._show_answers = answers
+
         super().__init__()
-        self.append(Addition.command())
+        self.append(Command('LARGE'))
+        if self._show_answers:
+            self.append(AdditionAnswer.command())
+        else:
+            self.append(Addition.command())
 
     @staticmethod
     def _problems(r, count):
-        m = [(i, j, i+j) for i in r for j in r]
-        random.shuffle(m)
-        if len(m) > count:
-            m = m[:count]
-        return m
+        problems = []
+        for n in range(count):
+            i = random.randint(r.start, r.stop)
+            j = random.randint(r.start, r.stop)
+            k = i + j
+            problems.append((i, j, k))
+        return problems
 
     def fill_document(self):
+        problems = self._rows * self._columns
+
         index = 0
-        for i, j, _ in self._problems(range(0, 11), count=80):
-            self.append(Addition(arguments=Arguments(i, j)))
-
-            column = index % 10 + 1
-            if column == 10:
-                self.append(VerticalSpace('1cm'))
-                self.append(LineBreak())
+        row = []
+        for i, j, k in self._problems(self._range, count=problems):
+            if len(str(i)) < len(str(j)):
+                i, j = j, i
+            if self._show_answers:
+                add = AdditionAnswer(arguments=Arguments(i, j, k))
             else:
-                self.append(HFill())
-
+                add = Addition(arguments=Arguments(i, j))
+            row.append(add)
             index += 1
+
+            column_number = index % self._columns
+            row_number = abs(index / self._columns)
+            if column_number == 0 and index > 0:
+                with self.create(Tabularx(self._columns * 'X', width_argument=NoEscape(r'\linewidth'))) as tx:
+                    tx.add_row(row)
+                if row_number < self._rows:
+                    self.extend([LineBreak(), VerticalSpace('2cm'), NewLine()])
+                row = []
