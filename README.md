@@ -4,6 +4,12 @@ I'm a firm believe in practice makes perfect and because the richest nation in t
 
 The worksheets are random so as to avoid simple copying.
 
+Oh, and could I have downloaded these off the web? Sure, to a limited extent. However, I have no interest in paying for these sorts of materials, registering for a website or limiting myself to the one free one. I wanted to be able to print new problems every day without having to go searching the web for 15 minutes. In fact, I can print them off on Sunday for the week, giving myself a variety of options.
+
+### Contributions
+
+This is just a quick hack to meet the day-to-day needs of my child's education. If you make it better, more flexible or add something that is missing feel free to fork, and send me a pull-request.
+
 ### Install requirements
 
 [Install MacTex](https://tug.org/mactex/)
