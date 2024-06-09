@@ -125,6 +125,37 @@ class Clock(CommandBase):
                              options=SpecialOptions(3, 2), extra_arguments=cls._latex)
 
 
+class DashedLine(CommandBase):
+    _latex_name = 'dashedline'
+    _latex = r'''
+  \abovebaseline[-2pt]{\hbox to #1{\dashfill\hfil}}
+'''
+    @classmethod
+    def command(cls):
+        return UnsafeCommand('newcommand',
+                             arguments=f'\\{cls._latex_name}',
+                             options=1,
+                             extra_arguments=cls._latex)
+
+class RuledPaper(CommandBase):
+    _latex_name = 'blankrow'
+
+    packages = [Package('stackengine', options='usestackEOL'), Package('scalerel')]
+
+    _latex = r'''
+  \setstackgap{L}{\the\letterheight}%
+  \stackon[\midpitch\letterheight]{%
+  \stackon{\smash{\stackunder[\bottompitch\letterheight]{\bottomhline}%
+    {\dashedline{\textwidth}}}}{\tophline}}{\dashedline{\textwidth}}%
+'''
+
+    @classmethod
+    def command(cls):
+        return UnsafeCommand('newcommand',
+                             arguments=f'\\{cls._latex_name}',
+                             extra_arguments=cls._latex)
+
+
 # clasxxs Division(CommandBase):
 #     _latex_name = 'divi'
 #

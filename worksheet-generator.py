@@ -10,6 +10,7 @@ from lib.division import DivisionWorksheet
 from lib.addition import AdditionWorksheet
 from lib.subtraction import SubtractionWorksheet
 from lib.clocks import ClocksWorksheet
+from lib.ruled_paper import RuledPaperWorksheet
 from lib.pages import Pages
 
 
@@ -23,7 +24,7 @@ def parse_range(string):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate worksheets for practicing math facts.')
     parser.add_argument('--type', '-t', choices=['multiplication', 'division',
-                                                 'addition', 'subtraction', 'clocks'],
+                                                 'addition', 'subtraction', 'clocks', 'ruled-paper'],
                         default='multiplication', help='Choose a worksheet type')
     parser.add_argument('--answers', '-a', action='store_true',
                         help='Generate an answer key')
@@ -46,6 +47,8 @@ if __name__ == '__main__':
                 ws = SubtractionWorksheet()
             elif args.type == 'clocks':
                 ws = ClocksWorksheet()
+            elif args.type == 'ruled-paper':
+                ws = RuledPaperWorksheet()
             else:
                 raise ValueError('Invalid worksheet type')
 

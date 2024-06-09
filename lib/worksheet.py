@@ -13,17 +13,18 @@ class Worksheet(Document):
     _title = None
     _instructions = None
 
-    def __init__(self):
+    def __init__(self, skip_header=False):
         super().__init__(indent=False,
                          documentclass='extarticle', document_options=['12pt'])
         self.preamble.append(Package('geometry', options=['a4paper', 'margin=1cm']))
         self.preamble.append(Package('xcolor', options=['dvipsnames']))
-        self.preamble.append(Command('usetikzlibrary', 'arrows.meta'))
         self.change_document_style('empty') # No page number please
-        self._add_header()
+        if not skip_header:
+            self._add_header()
 
     def _add_header(self):
         with self.create(Framed()) as e:
+            e.append(Command('usetikzlibrary', 'arrows.meta'))
             with e.create(Center()) as f:
                 f.append(Command('LARGE'))
                 f.append(Command('textbf', self._title))

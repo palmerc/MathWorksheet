@@ -24,10 +24,21 @@ Or one division worksheet
 
 Types also include `addition`, `subtraction` and `clocks`
 
+The ruled writing paper is probably not important to generate unless 
+you want to adjust the sizes.
 
+### Multiplication
 ![Multiplication Worksheet](samples/multiplication.jpg)
+
+### Clocks
 ![Clocks Worksheet](samples/clocks.jpg)
+
+### Division
 ![Division Worksheet](samples/division.jpg)
+
+### Addition
 ![Addition Worksheet](samples/addition.jpg)
 
+### Ruled A4 Paper
+![Ruled Paper](samples/ruled-paper.jpg)
 
