@@ -112,8 +112,8 @@ class Clock(CommandBase):
     \draw [line width = #1*1pt] (\x:2.6cm) -- (\x:2.8cm);
   };
 
-  \draw[rotate=90, -{Latex[length=#1*5mm]}, line width=#1*3pt, line cap=round] (0,0) -- (-#2*30-#3*30/60:2cm); % hours
-  \draw[rotate=90, -{Latex[length=#1*5mm]}, line width=#1*2pt, line cap=round] (0,0) -- (-#3*6:2.5cm); % minutes
+  \draw[rotate=90, arrows = -{Latex[length=#1*5mm]}, line width=#1*3pt, line cap=round] (0,0) -- (-#2*30-#3*30/60:2cm); % hours
+  \draw[rotate=90, arrows = -{Latex[length=#1*5mm]}, line width=#1*2pt, line cap=round] (0,0) -- (-#3*6:2.5cm); % minutes
   \filldraw (0,0) circle (1mm);
   %
 \end{tikzpicture}%

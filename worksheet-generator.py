@@ -7,6 +7,7 @@ import tempfile
 
 from lib.multiplication import MultiplicationWorksheet
 from lib.division import DivisionWorksheet
+from lib.division import LongDivisionWorksheet
 from lib.addition import AdditionWorksheet
 from lib.subtraction import SubtractionWorksheet
 from lib.clocks import ClocksWorksheet
@@ -23,7 +24,7 @@ def parse_range(string):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate worksheets for practicing math facts.')
-    parser.add_argument('--type', '-t', choices=['multiplication', 'division',
+    parser.add_argument('--type', '-t', choices=['multiplication', 'division', 'long-division',
                                                  'addition', 'subtraction', 'clocks', 'ruled-paper'],
                         default='multiplication', help='Choose a worksheet type')
     parser.add_argument('--answers', '-a', action='store_true',
@@ -41,6 +42,8 @@ if __name__ == '__main__':
                 ws = MultiplicationWorksheet()
             elif args.type == 'division':
                 ws = DivisionWorksheet()
+            elif args.type == 'long-division':
+                ws = LongDivisionWorksheet()
             elif args.type == 'addition':
                 ws = AdditionWorksheet(args.range, answers=args.answers)
             elif args.type == 'subtraction':
